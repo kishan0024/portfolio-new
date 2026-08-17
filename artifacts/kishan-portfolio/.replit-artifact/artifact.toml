@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Kishan Maheta — Portfolio"
+description = "A personal portfolio for Kishan Maheta, showcasing selected work, experience, and ways to connect in an editorial, image-led presentation."
+version = "1.0.0"
+id = "artifacts/kishan-portfolio"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23121
+
+[services.development]
+run = "pnpm --filter @workspace/kishan-portfolio run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/kishan-portfolio", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/kishan-portfolio/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23121"
+BASE_PATH = "/"
