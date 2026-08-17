@@ -1,49 +1,64 @@
-# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# Dependencies
+node_modules/
+.pnpm-store/
 
-# compiled output
-dist
-tmp
-out-tsc
+# Build and Output directories
+dist/
+**/dist/
+tmp/
+out-tsc/
 *.tsbuildinfo
-.expo
-.expo-shared
+.expo/
+.expo-shared/
+.vite/
+**/.vite-temp/
 
-# dependencies
-node_modules
+# Vercel & Deployment
+.vercel/
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
 
-# IDE - VSCode
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# IDEs and Editors
+.idea/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+*.swp
+*.swo
+*.sublime-workspace
+.project
+.classpath
+.settings/
 
-# misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-yarn-error.log
-testem.log
-/typings
-
-# System Files
+# OS / System Files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
-.cursor/rules/nx-rules.mdc
-.github/instructions/nx.instructions.md
-
-# Replit
+# Replit & Artifacts
 .cache/
 .local/
+.replit-artifact/
+/connect.lock
+/coverage
