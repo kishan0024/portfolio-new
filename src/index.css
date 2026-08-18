@@ -261,6 +261,30 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .media-caption { bottom: 16px; color: rgba(233,235,239,.58); font-family: var(--app-font-mono); font-size: 9px; left: 16px; position: absolute; z-index: 3; }
 .media-status { color: var(--green); font-family: var(--app-font-mono); font-size: 9px; position: absolute; right: 16px; top: 16px; z-index: 3; }
 
+.equalizer-bar {
+  width: 3px;
+  background-color: var(--green);
+  border-radius: 2px;
+  animation: bounce 1.2s ease-in-out infinite alternate;
+}
+.equalizer-bar:nth-child(1) { height: 10px; animation-delay: 0.1s; }
+.equalizer-bar:nth-child(2) { height: 14px; animation-delay: 0.3s; }
+.equalizer-bar:nth-child(3) { height: 8px; animation-delay: 0.2s; }
+.equalizer-bar:nth-child(4) { height: 12px; animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1.1); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
 .currently-heading, .content-heading {
   align-items: baseline;
   display: flex;

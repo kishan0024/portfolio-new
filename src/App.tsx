@@ -20,7 +20,9 @@ import {
   Mail,
   Menu,
   Moon,
+  Music,
   Phone,
+  Play,
   Sun,
   Terminal,
   UserCheck,
@@ -185,6 +187,158 @@ function Shell({ children, theme, onToggleTheme }: { children: ReactNode; theme:
   );
 }
 
+function TopTracksSection() {
+  const [tracks, setTracks] = useState<Array<{
+    id: string;
+    rank: string;
+    name: string;
+    artist: string;
+    albumArt: string;
+    url: string;
+  }>>([
+    {
+      id: '1',
+      rank: '01',
+      name: 'Starboy',
+      artist: 'The Weeknd, Daft Punk',
+      albumArt: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150&auto=format&fit=crop&q=80',
+      url: 'https://open.spotify.com',
+    },
+    {
+      id: '2',
+      rank: '02',
+      name: 'Resonance',
+      artist: 'HOME',
+      albumArt: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=150&auto=format&fit=crop&q=80',
+      url: 'https://open.spotify.com',
+    },
+    {
+      id: '3',
+      rank: '03',
+      name: 'Blinding Lights',
+      artist: 'The Weeknd',
+      albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=150&auto=format&fit=crop&q=80',
+      url: 'https://open.spotify.com',
+    },
+    {
+      id: '4',
+      rank: '04',
+      name: 'Midnight City',
+      artist: 'M83',
+      albumArt: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150&auto=format&fit=crop&q=80',
+      url: 'https://open.spotify.com',
+    },
+    {
+      id: '5',
+      rank: '05',
+      name: 'Instant Crush',
+      artist: 'Daft Punk, Julian Casablancas',
+      albumArt: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=150&auto=format&fit=crop&q=80',
+      url: 'https://open.spotify.com',
+    },
+  ]);
+
+  const spotifyToken = import.meta.env.VITE_TOKEN || import.meta.env.VITE_SPOTIFY_TOKEN || import.meta.env.VITE_SPOTIFY_ACCESS_TOKEN;
+  const lastfmKey = import.meta.env.VITE_LASTFM_API_KEY;
+  const lastfmUser = import.meta.env.VITE_LASTFM_USERNAME;
+
+  useEffect(() => {
+    async function fetchTopTracks() {
+      if (spotifyToken) {
+        try {
+          const res = await fetch('https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=5', {
+            headers: {
+              Authorization: `Bearer ${spotifyToken}`,
+            },
+          });
+          const data = await res.json();
+          if (data?.items && Array.isArray(data.items) && data.items.length > 0) {
+            const mapped = data.items.map((item: any, index: number) => ({
+              id: item.id || String(index + 1),
+              rank: `0${index + 1}`,
+              name: item.name,
+              artist: item.artists?.map((a: any) => a.name).join(', ') || 'Unknown Artist',
+              albumArt: item.album?.images?.[0]?.url || item.album?.images?.[1]?.url || '',
+              url: item.external_urls?.spotify || 'https://open.spotify.com',
+            }));
+            setTracks(mapped);
+            return;
+          }
+        } catch (err) {
+          console.error('Failed to fetch Spotify top tracks:', err);
+        }
+      }
+
+      if (lastfmKey && lastfmUser) {
+        try {
+          const res = await fetch(
+            `https://ws.audioscrobbler.com/2.0/?method=user.gettoptracks&user=${lastfmUser}&api_key=${lastfmKey}&format=json&limit=5`
+          );
+          const data = await res.json();
+          const items = data?.toptracks?.track;
+          if (items && Array.isArray(items) && items.length > 0) {
+            const mapped = items.map((item: any, index: number) => ({
+              id: String(index + 1),
+              rank: `0${index + 1}`,
+              name: item.name,
+              artist: item.artist?.name || 'Unknown Artist',
+              albumArt: item.image?.find((i: any) => i.size === 'medium')?.['#text'] || item.image?.[0]?.['#text'] || '',
+              url: item.url || 'https://www.last.fm',
+            }));
+            setTracks(mapped);
+          }
+        } catch (err) {
+          console.error('Failed to fetch Last.fm top tracks:', err);
+        }
+      }
+    }
+
+    fetchTopTracks();
+  }, [spotifyToken, lastfmKey, lastfmUser]);
+
+  return (
+    <section aria-labelledby="top-tracks-title" className="reveal reveal-delay-2" style={{ marginTop: 44 }}>
+      <div className="content-heading">
+        <h2 id="top-tracks-title">Top 5 Favorite Songs</h2>
+        <span className="section-note">heavy rotation</span>
+      </div>
+
+      <div className="playbook-list" style={{ marginTop: 16 }}>
+        {tracks.map((track: { id: string; rank: string; name: string; artist: string; albumArt: string; url: string }) => (
+          <article className="playbook-item" key={track.id} style={{ padding: '14px 0', alignItems: 'center' }}>
+            <span className="playbook-number">{track.rank}</span>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: 12 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                {track.albumArt && (
+                  <img
+                    src={track.albumArt}
+                    alt={track.name}
+                    style={{ width: 40, height: 40, borderRadius: 6, objectFit: 'cover', border: '1px solid var(--line)' }}
+                  />
+                )}
+                <div>
+                  <h3 style={{ fontSize: '0.95rem', fontWeight: 600, margin: 0, color: 'var(--ink)' }}>{track.name}</h3>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--muted-ink)', margin: '2px 0 0' }}>{track.artist}</p>
+                </div>
+              </div>
+
+              <a
+                href={track.url}
+                target="_blank"
+                rel="noreferrer"
+                className="contact-link"
+                style={{ padding: '6px 10px', fontSize: '0.75rem', flexShrink: 0 }}
+              >
+                <Music size={12} /> Play <ExternalLink size={10} />
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function Home() {
   return (
     <main className="page-frame" data-testid="page-home">
@@ -268,6 +422,8 @@ function Home() {
           </article>
         </div>
       </section>
+
+      <TopTracksSection />
     </main>
   );
 }
