@@ -1,8 +1,4 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm --filter @workspace/kishan-portfolio build",
-  "outputDirectory": "artifacts/kishan-portfolio/dist/public",
-  "installCommand": "pnpm install",
   "framework": "vite",
   "rewrites": [
     {
