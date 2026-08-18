@@ -410,6 +410,7 @@ function Projects() {
       </section>
 
       <section className="projects-layout" style={{ paddingTop: 20 }}>
+        <span className="section-note">featured systems</span>
         <div className="project-list" style={{ gap: 24 }}>
           {projectList.map((project) => (
             <article className="project-card" key={project.id} data-testid={`project-${project.id}`} style={{ padding: 24 }}>
