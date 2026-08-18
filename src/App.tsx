@@ -6,13 +6,25 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
 import {
   ArrowUpRight,
+  Award,
+  Briefcase,
+  Code2,
+  Cpu,
+  Database,
+  ExternalLink,
+  FolderGit2,
   Github,
+  GraduationCap,
+  Layers,
   Linkedin,
   Mail,
   Menu,
   Moon,
-  Play,
+  Phone,
   Sun,
+  Terminal,
+  UserCheck,
+  Wrench,
   X,
 } from 'lucide-react';
 import {
@@ -24,16 +36,20 @@ import {
 } from 'wouter';
 
 const queryClient = new QueryClient();
-const emailAddress = 'kishanmaheta.dev@gmail.com';
+const emailAddress = 'mahetakishan01@gmail.com';
+const phoneNumber = '+91 9054191791';
+const locationText = 'Ahmedabad, Gujarat, India';
 const linkedinUrl = 'https://www.linkedin.com/in/mahetakishan24/';
-const githubUrl = 'https://github.com/kishanmaheta';
+const githubUrl = 'https://github.com/kishan0024';
+const leetcodeUrl = 'https://leetcode.com/u/mahetakishan01/';
+const awsCertValidation = '2MG79FGDYBF11NW4';
 
 const routes = [
   { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/gear', label: 'Gear' },
+  { href: '/about', label: 'About & Experience' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/skills', label: 'Skills' },
   { href: '/contact', label: 'Contact' },
-  { href: '/playbook', label: 'Playbook' },
 ];
 
 type Theme = 'dark' | 'light';
@@ -95,7 +111,7 @@ function Header({ theme, onToggleTheme }: { theme: Theme; onToggleTheme: () => v
               className={`nav-link${active ? ' active' : ''}`}
               href={route.href}
               aria-current={active ? 'page' : undefined}
-              data-testid={`link-nav-${route.label.toLowerCase()}`}
+              data-testid={`link-nav-${route.label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
               key={route.href}
             >
               {route.label}
@@ -132,7 +148,7 @@ function Header({ theme, onToggleTheme }: { theme: Theme; onToggleTheme: () => v
                 className={`nav-link${active ? ' active' : ''}`}
                 href={route.href}
                 aria-current={active ? 'page' : undefined}
-                data-testid={`link-mobile-${route.label.toLowerCase()}`}
+                data-testid={`link-mobile-${route.label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
                 key={route.href}
               >
                 {route.label}
@@ -148,10 +164,11 @@ function Header({ theme, onToggleTheme }: { theme: Theme; onToggleTheme: () => v
 function Footer() {
   return (
     <footer className="site-footer" data-testid="site-footer">
-      <span data-testid="text-footer-location">© 2025 Kishan Maheta · Ahmedabad, India</span>
+      <span data-testid="text-footer-location">© 2026 Kishan Maheta · {locationText}</span>
       <div className="footer-links">
         <a className="footer-link" href={linkedinUrl} target="_blank" rel="noreferrer" data-testid="link-footer-linkedin">LinkedIn</a>
         <a className="footer-link" href={githubUrl} target="_blank" rel="noreferrer" data-testid="link-footer-github">GitHub</a>
+        <a className="footer-link" href={leetcodeUrl} target="_blank" rel="noreferrer" data-testid="link-footer-leetcode">LeetCode</a>
         <a className="footer-link" href={`mailto:${emailAddress}`} data-testid="link-footer-email">Email</a>
       </div>
     </footer>
@@ -169,61 +186,86 @@ function Shell({ children, theme, onToggleTheme }: { children: ReactNode; theme:
 }
 
 function Home() {
-  const [playing, setPlaying] = useState(false);
   return (
     <main className="page-frame" data-testid="page-home">
       <Seo
-        title="Kishan Maheta — Senior Software Engineer"
-        description="The personal site of Kishan Maheta, a senior software engineer at Middleware based in Ahmedabad."
+        title="Kishan Maheta — Sr. Full Stack Developer (React + Go)"
+        description="Personal portfolio of Kishan Maheta, Sr. Full Stack Developer specializing in React, Go, high-performance dashboards, microservices, and distributed systems."
       />
       <section className="page-intro home-intro reveal" aria-labelledby="home-title">
-        <p className="page-kicker">Senior software engineer · Ahmedabad, India</p>
-        <h1 className="page-title" id="home-title" data-testid="text-home-title">hello, Kishan here</h1>
+        <p className="page-kicker">Sr. Full Stack Developer (React + Go) · {locationText}</p>
+        <h1 className="page-title" id="home-title" data-testid="text-home-title">Kishan Maheta</h1>
         <p className="page-subtitle" data-testid="text-home-intro">
-          I build dependable software at Middleware, and keep notes on the parts of the work that stay interesting.
+          I build high-performance distributed backends in Go and intuitive, responsive web dashboards in React & TypeScript.
         </p>
-      </section>
 
-      <section className="media-panel reveal reveal-delay" aria-label="Intro video placeholder" data-testid="panel-intro-media">
-        <div className="media-grid" />
-        <div className="media-orbit" />
-        <span className="media-status">{playing ? 'playing / soon' : 'intro / 00:48'}</span>
-        <div className="media-center">
-          <button
-            className="play-button"
-            type="button"
-            aria-label={playing ? 'Pause intro placeholder' : 'Play intro placeholder'}
-            onClick={() => setPlaying((value) => !value)}
-            data-testid="button-intro-play"
-          >
-            {playing ? <span aria-hidden="true" style={{ fontSize: 13 }}>Ⅱ</span> : <Play size={16} fill="currentColor" strokeWidth={1.4} />}
-          </button>
+        <div className="contact-links" style={{ marginTop: 20 }}>
+          <a className="contact-link" href={`mailto:${emailAddress}`} data-testid="link-home-email">
+            <Mail size={13} /> {emailAddress}
+          </a>
+          <a className="contact-link" href={`tel:${phoneNumber.replace(/\s+/g, '')}`} data-testid="link-home-phone">
+            <Phone size={13} /> {phoneNumber}
+          </a>
+          <a className="contact-link" href={githubUrl} target="_blank" rel="noreferrer" data-testid="link-home-github">
+            <Github size={13} /> GitHub <ArrowUpRight size={11} />
+          </a>
+          <a className="contact-link" href={linkedinUrl} target="_blank" rel="noreferrer" data-testid="link-home-linkedin">
+            <Linkedin size={13} /> LinkedIn <ArrowUpRight size={11} />
+          </a>
+          <a className="contact-link" href={leetcodeUrl} target="_blank" rel="noreferrer" data-testid="link-home-leetcode">
+            <Code2 size={13} /> LeetCode (198+) <ArrowUpRight size={11} />
+          </a>
         </div>
-        <span className="media-caption">{playing ? 'a future introduction, in progress' : 'a future introduction, currently a quiet placeholder'}</span>
       </section>
 
-      <section aria-labelledby="currently-title" className="reveal reveal-delay-2">
+      <section aria-labelledby="currently-title" className="reveal reveal-delay" style={{ marginTop: 24 }}>
         <div className="currently-heading">
-          <h2 className="section-label" id="currently-title">currently</h2>
-          <span className="section-note">a small status update</span>
+          <h2 className="section-label" id="currently-title">Overview</h2>
+          <span className="section-note">at a glance</span>
         </div>
         <div className="currently-grid">
           <div className="currently-card" data-testid="card-current-role">
-            <span className="card-label">doing</span>
-            <span className="card-value">Building observability tools at <a href="https://middleware.io" target="_blank" rel="noreferrer">Middleware</a></span>
+            <span className="card-label">Current Role</span>
+            <span className="card-value">
+              Sr. Full Stack Developer at <a href="https://middleware.io" target="_blank" rel="noreferrer">Middleware.io</a>
+            </span>
           </div>
-          <div className="currently-card" data-testid="card-current-reading">
-            <span className="card-label">learning</span>
-            <span className="card-value">Making distributed systems easier to reason about</span>
+          <div className="currently-card" data-testid="card-current-stack">
+            <span className="card-label">Core Tech</span>
+            <span className="card-value">Go, Gin, React, TypeScript, Highcharts, Postgres, Redis, Docker</span>
           </div>
-          <div className="currently-card" data-testid="card-current-place">
-            <span className="card-label">based in</span>
-            <span className="card-value">Ahmedabad, India</span>
+          <div className="currently-card" data-testid="card-current-cert">
+            <span className="card-label">Certification</span>
+            <span className="card-value">AWS Certified Cloud Practitioner ({awsCertValidation})</span>
           </div>
-          <div className="currently-card" data-testid="card-current-open">
-            <span className="card-label">open to</span>
-            <span className="card-value">Good questions and thoughtful teams</span>
+          <div className="currently-card" data-testid="card-current-location">
+            <span className="card-label">Based In</span>
+            <span className="card-value">{locationText}</span>
           </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="highlights-title" className="reveal reveal-delay-2" style={{ marginTop: 36 }}>
+        <div className="content-heading">
+          <h2 id="highlights-title">Featured Highlights</h2>
+          <span className="section-note">key achievements</span>
+        </div>
+        <div className="timeline-list" style={{ paddingTop: 16 }}>
+          <article className="timeline-item">
+            <div className="timeline-date">Middleware.io · SaaS Infrastructure & Billing</div>
+            <h3 className="timeline-role">Go Concurrency & High-Throughput Billing Pipelines</h3>
+            <p className="timeline-detail">
+              Designed scalable billing cron jobs using Go concurrency primitives (goroutines, semaphores, RWMutex) to process usage metering and automated Stripe & Chargebee subscriptions across all SaaS accounts, drastically reducing execution time.
+            </p>
+          </article>
+
+          <article className="timeline-item">
+            <div className="timeline-date">Middleware.io · Dashboards & ML UI/UX</div>
+            <h3 className="timeline-role">Highcharts Observability & ML Outlier Detection</h3>
+            <p className="timeline-detail">
+              Built dynamic chart visualizations and shareable dashboards with Highcharts & Antd. Created intuitive UI/UX for machine learning anomaly detection and forecasting modules.
+            </p>
+          </article>
         </div>
       </section>
     </main>
@@ -234,98 +276,93 @@ function About() {
   return (
     <main className="page-frame" data-testid="page-about">
       <Seo
-        title="About Kishan Maheta"
-        description="About Kishan Maheta: his engineering work, education, projects, and the interests around it."
+        title="About & Experience — Kishan Maheta"
+        description="Work experience and background of Kishan Maheta, Sr. Full Stack Developer at Middleware.io."
       />
       <section className="page-intro reveal" aria-labelledby="about-title">
-        <p className="page-kicker">a little context</p>
-        <h1 className="page-title" id="about-title" data-testid="text-about-title">About</h1>
-        <p className="page-subtitle" data-testid="text-about-subtitle">Who I am, and what I have been making.</p>
+        <p className="page-kicker">experience & background</p>
+        <h1 className="page-title" id="about-title" data-testid="text-about-title">About & Experience</h1>
+        <p className="page-subtitle" data-testid="text-about-subtitle">My professional journey in software engineering.</p>
       </section>
+
       <section className="about-content">
         <p className="body-copy" data-testid="text-about-copy">
-          I&apos;m Kishan, a senior software engineer at <strong>Middleware</strong>. I enjoy the middle layer of a product: where an ambitious idea becomes a system with clear boundaries, useful feedback, and a good experience for the person using it.
+          I am a <strong>Senior Full Stack Developer</strong> with strong expertise in <strong>Go (Golang)</strong>, <strong>TypeScript</strong>, and <strong>React</strong>. I specialize in developing resilient backend microservices, optimizing complex database queries, building real-time dashboard visualizations, and crafting seamless SaaS product features.
         </p>
-        <div className="collage" aria-label="Abstract collage of places and ideas" data-testid="visual-about-collage">
-          <div className="collage-card collage-card-one" />
-          <div className="collage-card collage-card-two" />
-          <div className="collage-card collage-card-three" />
-          <div className="collage-card collage-card-four" />
-          <span className="collage-caption">field notes / 01—04</span>
+      </section>
+
+      <section aria-labelledby="work-experience-title" style={{ marginTop: 32 }}>
+        <div className="content-heading">
+          <h2 id="work-experience-title">Work Experience</h2>
+          <span className="section-note">industry experience</span>
+        </div>
+
+        <div className="timeline-list" style={{ paddingTop: 20 }}>
+          <article className="timeline-item" data-testid="experience-middleware">
+            <div className="timeline-date">June 2024 – Present</div>
+            <h3 className="timeline-role">Sr. Full Stack Developer (React + Go)</h3>
+            <div className="timeline-company">Middleware.io · Ahmedabad, India</div>
+            <ul className="body-copy" style={{ marginTop: 10, paddingLeft: 18, fontSize: '0.92rem', lineHeight: '1.6' }}>
+              <li>Maintained and enhanced core infrastructure modules serving as the foundation for frontend components and APIs across product modules.</li>
+              <li>Developed frontend components using TypeScript, Ant Design (Antd), and SCSS for scalable UI solutions across complex dashboards.</li>
+              <li>Built dynamic chart visualizations with Highcharts, integrating core components and enabling publicly shareable dashboards.</li>
+              <li>Designed and developed UI/UX interfaces for machine learning modules (anomalies, forecasting, outlier detection) powering advanced alerting features.</li>
+              <li>Refactored legacy React.js codebase to optimize performance for high widget counts; shifted complex business logic to backend Go APIs.</li>
+              <li>Owned Billing, Usage, and Settings modules across the SaaS platform; automated subscriptions and usage metering via Stripe & Chargebee webhooks.</li>
+              <li>Optimized scalable billing cron jobs using Go concurrency primitives (goroutines, semaphores, RWMutex), significantly increasing throughput.</li>
+            </ul>
+          </article>
+
+          <article className="timeline-item" data-testid="experience-simform">
+            <div className="timeline-date">Jan 2023 – June 2024</div>
+            <h3 className="timeline-role">Software Engineer (Backend)</h3>
+            <div className="timeline-company">Simform Solutions LLP · Ahmedabad, India</div>
+            <ul className="body-copy" style={{ marginTop: 10, paddingLeft: 18, fontSize: '0.92rem', lineHeight: '1.6' }}>
+              <li>Developed scalable, high-performance backend microservices using Golang and the Gin framework.</li>
+              <li>Designed and implemented RESTful APIs following best practices, including request/response validation and pagination.</li>
+              <li>Wrote optimized SQL queries using ORMs (GORM, SQLC) and raw SQL for performance-critical database operations.</li>
+              <li>Designed and executed unit test suites with high code coverage to ensure software reliability.</li>
+              <li>Generated and maintained Swagger/OpenAPI documentation for clear API specifications.</li>
+              <li>Containerized applications using Docker and integrated AWS SDK for Golang (SQS, SES, DynamoDB).</li>
+            </ul>
+          </article>
         </div>
       </section>
 
-      <section aria-labelledby="timeline-title">
+      <section aria-labelledby="education-title" style={{ marginTop: 40 }}>
         <div className="content-heading">
-          <h2 id="timeline-title">Timeline</h2>
-          <span className="section-note">work + education</span>
+          <h2 id="education-title">Education</h2>
+          <span className="section-note">academic background</span>
         </div>
-        <div className="timeline-layout" style={{ paddingTop: 22 }}>
-          <span className="section-note">the long view</span>
-          <div className="timeline-list">
-            <article className="timeline-item" data-testid="timeline-middleware-senior">
-              <div className="timeline-date">2023 — now</div>
-              <h3 className="timeline-role">Senior Software Engineer</h3>
-              <div className="timeline-company">Middleware · Ahmedabad</div>
-              <p className="timeline-detail">Working on observability products and the platform foundations behind them.</p>
-            </article>
-            <article className="timeline-item" data-testid="timeline-middleware">
-              <div className="timeline-date">2021 — 2023</div>
-              <h3 className="timeline-role">Software Engineer</h3>
-              <div className="timeline-company">Middleware · Ahmedabad</div>
-              <p className="timeline-detail">Built APIs, product surfaces, and dependable connective tissue for a growing team.</p>
-            </article>
-            <article className="timeline-item" data-testid="timeline-simform">
-              <div className="timeline-date">2019 — 2021</div>
-              <h3 className="timeline-role">Software Engineer</h3>
-              <div className="timeline-company">Simform · Ahmedabad</div>
-              <p className="timeline-detail">Shipped web products with different teams, constraints, and definitions of done.</p>
-            </article>
-            <article className="timeline-item" data-testid="timeline-education">
-              <div className="timeline-date">2015 — 2019</div>
-              <h3 className="timeline-role">B.Tech in Computer Engineering</h3>
-              <div className="timeline-company">Birla Vishvakarma Mahavidyalaya · Vallabh Vidyanagar</div>
-              <p className="timeline-detail">The formal foundation, with plenty of informal learning around it.</p>
-            </article>
+        <div className="timeline-list" style={{ paddingTop: 20 }}>
+          <article className="timeline-item" data-testid="education-bvm">
+            <div className="timeline-date">2019 – 2023</div>
+            <h3 className="timeline-role">B.Tech in Computer Engineering</h3>
+            <div className="timeline-company">BVM Engineering College · Vidhyanagar, Anand</div>
+            <p className="timeline-detail" style={{ marginTop: 6 }}>
+              <strong>CPI: 7.84</strong> · Served as Training & Placement Coordinator throughout final year. Organized major events for the Annual Tech Fest (UDAAN).
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="achievements-title" style={{ marginTop: 40 }}>
+        <div className="content-heading">
+          <h2 id="achievements-title">Certifications & Achievements</h2>
+          <span className="section-note">recognition</span>
+        </div>
+        <div className="currently-grid" style={{ marginTop: 20 }}>
+          <div className="currently-card">
+            <span className="card-label">AWS Certification</span>
+            <span className="card-value">AWS Certified Cloud Practitioner</span>
+            <span className="section-note" style={{ display: 'block', marginTop: 4 }}>Validation ID: {awsCertValidation}</span>
           </div>
-        </div>
-      </section>
-
-      <section aria-labelledby="projects-title">
-        <div className="content-heading">
-          <h2 id="projects-title">Projects</h2>
-          <span className="section-note">selected experiments</span>
-        </div>
-        <div className="projects-layout" style={{ paddingTop: 22 }}>
-          <span className="section-note">easy to replace</span>
-          <div className="project-list">
-            <article className="project-card" data-testid="project-observability">
-              <div className="project-top"><h3 className="project-title">Observability foundations</h3><ArrowUpRight size={13} strokeWidth={1.5} /></div>
-              <p className="project-description">The unglamorous, useful work of helping teams see what their systems are doing.</p>
-              <div className="tag-row"><span className="tag tag-blue">TypeScript</span><span className="tag tag-green">platform</span><span className="tag tag-yellow">APIs</span></div>
-            </article>
-            <article className="project-card" data-testid="project-developer-tools">
-              <div className="project-top"><h3 className="project-title">Small developer tools</h3><ArrowUpRight size={13} strokeWidth={1.5} /></div>
-              <p className="project-description">Tiny utilities and experiments that make a repeated sharp edge a little softer.</p>
-              <div className="tag-row"><span className="tag tag-pink">experiments</span><span className="tag tag-blue">React</span><span className="tag tag-green">DX</span></div>
-            </article>
-            <a className="project-link" href={githubUrl} target="_blank" rel="noreferrer" data-testid="link-projects-github">More small things live on GitHub <ArrowUpRight size={11} /></a>
-          </div>
-        </div>
-      </section>
-
-      <section aria-labelledby="hobbies-title">
-        <div className="content-heading">
-          <h2 id="hobbies-title">Hobbies</h2>
-          <span className="section-note">away from the editor</span>
-        </div>
-        <div className="hobbies-layout" style={{ paddingTop: 22 }}>
-          <span className="section-note">other tabs open</span>
-          <div className="hobby-grid">
-            <div className="hobby-card" data-testid="hobby-walks"><h3>Long walks</h3><p>Time to let an idea finish its sentence.</p></div>
-            <div className="hobby-card" data-testid="hobby-interfaces"><h3>Good interfaces</h3><p>Collecting the small details that make tools feel human.</p></div>
-            <div className="hobby-card" data-testid="hobby-reading"><h3>Reading broadly</h3><p>Engineering, people, cities, and whatever changes the question.</p></div>
-            <div className="hobby-card" data-testid="hobby-food"><h3>Finding good food</h3><p>Ahmedabad is a very persuasive place to keep this habit.</p></div>
+          <div className="currently-card">
+            <span className="card-label">Problem Solving</span>
+            <span className="card-value">LeetCode Profile</span>
+            <a href={leetcodeUrl} target="_blank" rel="noreferrer" className="section-note" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, marginTop: 4, color: 'var(--blue)' }}>
+              198+ DSA Problems Solved <ExternalLink size={12} />
+            </a>
           </div>
         </div>
       </section>
@@ -333,51 +370,130 @@ function About() {
   );
 }
 
-const gearGroups = [
+const projectList = [
   {
-    title: 'Frontend',
-    description: 'Interfaces that stay legible as they grow.',
-    tags: ['TypeScript', 'React', 'Next.js', 'CSS', 'Accessibility'],
+    id: 'medical-hrms',
+    title: 'Medical HRMS System',
+    subtitle: 'Healthcare Asset & Radiologist Management System',
+    description:
+      'Developed a comprehensive system enabling parent medical organizations to manage institutions, radiologists, case studies, and billing. Automated case study assignments to doctors to eliminate physical document overhead.',
+    features: [
+      'Real-time WebSocket communication enabling direct doctor-to-doctor messaging',
+      'Priority notification system alerting staff when urgent case studies are registered',
+      'Dynamic RBAC (Role-Based Access Control) permission management system',
+    ],
+    techStack: ['React', 'Golang', 'WebSockets', 'RBAC', 'PostgreSQL'],
   },
   {
-    title: 'Backend',
-    description: 'Clear contracts, useful failure modes.',
-    tags: ['Node.js', 'Go', 'REST APIs', 'PostgreSQL', 'Redis'],
-  },
-  {
-    title: 'Systems',
-    description: 'The invisible work behind dependable software.',
-    tags: ['Distributed systems', 'Observability', 'Queues', 'Docker', 'Linux'],
-  },
-  {
-    title: 'Ways of working',
-    description: 'Tools are secondary to the habits around them.',
-    tags: ['Design docs', 'Small PRs', 'Pairing', 'Measurement', 'Curiosity'],
+    id: 'attendance-facial-recognition',
+    title: 'Attendance Management System Using Face Recognition',
+    subtitle: 'Facial Recognition & Record Automation',
+    description:
+      'Developed an automated Attendance Management System leveraging Python Flask integrated with a Haar Cascade Classifier for real-time facial recognition and automated attendance tracking.',
+    features: [
+      'Real-time facial detection and identification using Haar Cascade Classifier',
+      'User-friendly management portal for student and staff records with secure data storage',
+      'RESTful API architecture for seamless data retrieval and RBAC permission enforcement',
+    ],
+    techStack: ['Python', 'Flask', 'Haar Cascade', 'OpenCV', 'REST APIs', 'RBAC'],
   },
 ];
 
-function Gear() {
+function Projects() {
   return (
-    <main className="page-frame" data-testid="page-gear">
-      <Seo title="Gear — Kishan Maheta" description="The tools, technologies, and working habits Kishan Maheta reaches for." />
-      <section className="page-intro reveal" aria-labelledby="gear-title">
-        <p className="page-kicker">tools, not trophies</p>
-        <h1 className="page-title" id="gear-title" data-testid="text-gear-title">Gear</h1>
-        <p className="page-subtitle" data-testid="text-gear-subtitle">A practical list of what I reach for, grouped by the job it does.</p>
+    <main className="page-frame" data-testid="page-projects">
+      <Seo title="Projects — Kishan Maheta" description="Featured engineering projects by Kishan Maheta including Golang backends, React applications, and AI system integrations." />
+      <section className="page-intro reveal" aria-labelledby="projects-title">
+        <p className="page-kicker">featured software</p>
+        <h1 className="page-title" id="projects-title" data-testid="text-projects-title">Projects</h1>
+        <p className="page-subtitle" data-testid="text-projects-subtitle">Highlighting key systems and applications I have developed.</p>
       </section>
-      <section className="gear-groups" aria-label="Technology groups">
-        {gearGroups.map((group, index) => (
-          <article className="gear-group" key={group.title} data-testid={`gear-group-${index}`}>
-            <div><h2>{group.title}</h2><p>{group.description}</p></div>
-            <div className="gear-tags">
-              {group.tags.map((tag) => <span className="gear-tag" key={tag}>{tag}</span>)}
-            </div>
-          </article>
-        ))}
+
+      <section className="projects-layout" style={{ paddingTop: 20 }}>
+        <div className="project-list" style={{ gap: 24 }}>
+          {projectList.map((project) => (
+            <article className="project-card" key={project.id} data-testid={`project-${project.id}`} style={{ padding: 24 }}>
+              <div className="project-top" style={{ marginBottom: 8 }}>
+                <h3 className="project-title" style={{ fontSize: '1.25rem' }}>{project.title}</h3>
+                <FolderGit2 size={16} strokeWidth={1.5} />
+              </div>
+              <p className="section-note" style={{ marginBottom: 12 }}>{project.subtitle}</p>
+              <p className="project-description" style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>{project.description}</p>
+              
+              <ul className="body-copy" style={{ marginTop: 12, paddingLeft: 18, fontSize: '0.9rem', lineHeight: '1.6' }}>
+                {project.features.map((feature, i) => (
+                  <li key={i}>{feature}</li>
+                ))}
+              </ul>
+
+              <div className="tag-row" style={{ marginTop: 16 }}>
+                {project.techStack.map((tech) => (
+                  <span className="tag tag-blue" key={tech}>{tech}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+
+          <a className="project-link" href={githubUrl} target="_blank" rel="noreferrer" data-testid="link-projects-github" style={{ marginTop: 12 }}>
+            Explore more repositories on GitHub ({githubUrl}) <ArrowUpRight size={13} />
+          </a>
+        </div>
       </section>
-      <p className="body-copy" style={{ marginTop: 30 }} data-testid="text-gear-note">
-        The exact stack changes with the problem. I care more about thoughtful boundaries, observable behavior, and leaving the next person a clear path through the code.
-      </p>
+    </main>
+  );
+}
+
+const skillCategories = [
+  {
+    title: 'Languages',
+    icon: Code2,
+    tags: ['Go (Golang)', 'TypeScript', 'C / C++', 'JSX', 'JavaScript'],
+  },
+  {
+    title: 'Frameworks & Frontend',
+    icon: Layers,
+    tags: ['ReactJs', 'Gin (Go)', 'Ant Design (Antd)', 'TailWind CSS', 'Highcharts', 'NextJs'],
+  },
+  {
+    title: 'Databases & Caching',
+    icon: Database,
+    tags: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'GORM', 'SQLC'],
+  },
+  {
+    title: 'Tools & DevOps',
+    icon: Wrench,
+    tags: ['Docker', 'Swagger / OpenAPI', 'Postman', 'Git', 'Observability', 'AWS (SQS, SES, DynamoDB)'],
+  },
+];
+
+function Skills() {
+  return (
+    <main className="page-frame" data-testid="page-skills">
+      <Seo title="Skills & Tech Stack — Kishan Maheta" description="Programming languages, frameworks, databases, and DevOps tools used by Kishan Maheta." />
+      <section className="page-intro reveal" aria-labelledby="skills-title">
+        <p className="page-kicker">technical stack</p>
+        <h1 className="page-title" id="skills-title" data-testid="text-skills-title">Skills & Technologies</h1>
+        <p className="page-subtitle" data-testid="text-skills-subtitle">Languages, frameworks, databases, and tooling I use daily.</p>
+      </section>
+
+      <section className="gear-groups" aria-label="Skill categories" style={{ marginTop: 24 }}>
+        {skillCategories.map((cat, index) => {
+          const Icon = cat.icon;
+          return (
+            <article className="gear-group" key={cat.title} data-testid={`skill-group-${index}`}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                <Icon size={18} />
+                <h2 style={{ fontSize: '1.1rem', margin: 0 }}>{cat.title}</h2>
+              </div>
+              <div className="gear-tags" style={{ marginTop: 12 }}>
+                {cat.tags.map((tag) => (
+                  <span className="gear-tag" key={tag}>{tag}</span>
+                ))}
+              </div>
+            </article>
+          );
+        })}
+      </section>
     </main>
   );
 }
@@ -385,54 +501,42 @@ function Gear() {
 function Contact() {
   return (
     <main className="page-frame" data-testid="page-contact">
-      <Seo title="Contact Kishan Maheta" description="Get in touch with Kishan Maheta about software, systems, or a good problem." />
+      <Seo title="Contact — Kishan Maheta" description="Get in touch with Kishan Maheta for full-stack engineering, backend systems, or consultation." />
       <section className="page-intro reveal" aria-labelledby="contact-title">
-        <p className="page-kicker">open channel</p>
-        <h1 className="page-title" id="contact-title" data-testid="text-contact-title">Let&apos;s talk.</h1>
-        <p className="page-subtitle" data-testid="text-contact-subtitle">Have a good problem, an interesting question, or a link worth sending?</p>
+        <p className="page-kicker">get in touch</p>
+        <h1 className="page-title" id="contact-title" data-testid="text-contact-title">Let&apos;s Connect.</h1>
+        <p className="page-subtitle" data-testid="text-contact-subtitle">Looking for a senior full-stack developer or have a project in mind?</p>
       </section>
-      <section className="contact-card" data-testid="card-contact">
-        <p>I&apos;m always happy to hear from people who care about the details. Email is the best place to start; the other links are here if you want to see what I&apos;ve been up to first.</p>
-        <a className="contact-email" href={`mailto:${emailAddress}`} data-testid="link-contact-email">{emailAddress}</a>
-        <div className="contact-links">
-          <a className="contact-link" href={linkedinUrl} target="_blank" rel="noreferrer" data-testid="link-contact-linkedin"><Linkedin size={13} strokeWidth={1.7} /> LinkedIn <ArrowUpRight size={11} /></a>
-          <a className="contact-link" href={githubUrl} target="_blank" rel="noreferrer" data-testid="link-contact-github"><Github size={13} strokeWidth={1.7} /> GitHub <ArrowUpRight size={11} /></a>
-          <a className="contact-link" href="https://middleware.io" target="_blank" rel="noreferrer" data-testid="link-contact-middleware">Middleware <ArrowUpRight size={11} /></a>
+
+      <section className="contact-card" data-testid="card-contact" style={{ padding: 28 }}>
+        <p style={{ fontSize: '1rem', lineHeight: '1.6' }}>
+          Feel free to reach out directly via email or phone. I&apos;m always open to discussing new engineering opportunities, distributed system challenges, or software architecture.
+        </p>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, margin: '20px 0' }}>
+          <a className="contact-email" href={`mailto:${emailAddress}`} data-testid="link-contact-email">
+            <Mail size={16} /> {emailAddress}
+          </a>
+          <a className="contact-email" href={`tel:${phoneNumber.replace(/\s+/g, '')}`} data-testid="link-contact-phone" style={{ fontSize: '1.1rem' }}>
+            <Phone size={16} /> {phoneNumber}
+          </a>
+        </div>
+
+        <div className="contact-links" style={{ marginTop: 24 }}>
+          <a className="contact-link" href={linkedinUrl} target="_blank" rel="noreferrer" data-testid="link-contact-linkedin">
+            <Linkedin size={14} /> LinkedIn <ArrowUpRight size={11} />
+          </a>
+          <a className="contact-link" href={githubUrl} target="_blank" rel="noreferrer" data-testid="link-contact-github">
+            <Github size={14} /> GitHub <ArrowUpRight size={11} />
+          </a>
+          <a className="contact-link" href={leetcodeUrl} target="_blank" rel="noreferrer" data-testid="link-contact-leetcode">
+            <Code2 size={14} /> LeetCode <ArrowUpRight size={11} />
+          </a>
         </div>
       </section>
+
       <p className="body-copy" style={{ marginTop: 28 }} data-testid="text-contact-note">
-        Based in Ahmedabad, working with people anywhere a clear idea could use a careful build.
-      </p>
-    </main>
-  );
-}
-
-const playbookItems = [
-  ['01', 'Start with the shape of the problem', 'Before choosing a tool, I try to make the problem visible: who is it for, what changes, and what would “better” actually look like?'],
-  ['02', 'Prefer a small, observable first step', 'A modest slice with good feedback usually teaches more than a large plan. I like systems that tell us how they are behaving.'],
-  ['03', 'Make decisions easy to revisit', 'Good boundaries leave room for new information. A clear note today can save a surprising amount of archaeology next month.'],
-  ['04', 'Keep the human in the loop', 'Software is a means, not the whole story. I care about the person reading the output, recovering from a failure, or learning the system.'],
-];
-
-function Playbook() {
-  return (
-    <main className="page-frame" data-testid="page-playbook">
-      <Seo title="Playbook — Kishan Maheta" description="A few things Kishan Maheta is thinking about, and how he likes to work." />
-      <section className="page-intro reveal" aria-labelledby="playbook-title">
-        <p className="page-kicker">working notes</p>
-        <h1 className="page-title" id="playbook-title" data-testid="text-playbook-title">Playbook</h1>
-        <p className="page-subtitle" data-testid="text-playbook-subtitle">Things I&apos;m thinking about, and a few ways I like to work.</p>
-      </section>
-      <section className="playbook-list" aria-label="Working principles">
-        {playbookItems.map(([number, title, copy]) => (
-          <article className="playbook-item" key={number} data-testid={`playbook-item-${number}`}>
-            <span className="playbook-number">{number}</span>
-            <div><h2>{title}</h2><p>{copy}</p></div>
-          </article>
-        ))}
-      </section>
-      <p className="body-copy" style={{ marginTop: 28 }} data-testid="text-playbook-closing">
-        This is a living page, not a doctrine. The best part of a playbook is finding where it needs to change.
+        Based in <strong>{locationText}</strong>.
       </p>
     </main>
   );
@@ -444,9 +548,9 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/about" component={About} />
-        <Route path="/gear" component={Gear} />
+        <Route path="/projects" component={Projects} />
+        <Route path="/skills" component={Skills} />
         <Route path="/contact" component={Contact} />
-        <Route path="/playbook" component={Playbook} />
         <Route component={NotFound} />
       </Switch>
     </RoutedErrorBoundary>
